@@ -1,0 +1,42 @@
+﻿@model cookie_authentication.Views.ViewModels.Account.UserRegisterViewModel;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="flex-container">
+    <div class="box">  
+        <form id="form-register" asp-controller="account" asp-action="Register" method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" />
+                <label for="Name" class="error_message help-block"></label>
+            </div>
+             <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" />
+                <label for="Email" class="error_message help-block"></label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input  asp-for="Username"/>
+                <label for="Username" class="error_message help-block"></label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" />
+                <label for="Password" class="error_message help-block"></label>
+            </div>
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+    @section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/js/validate-custom-rules.js" asp-append-version="true"></script>
+        <script src="~/js/account/register.js" asp-append-version="true"></script>
+    }
+</div>
