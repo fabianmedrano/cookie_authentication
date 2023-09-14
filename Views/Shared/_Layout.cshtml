@@ -37,16 +37,18 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
 
-
-                   @if (userRoles != null && userRoles.Contains("client"))
+@if (User.IsInRole("Admin"))
 {
-    <div>Menú para usuarios con RolEspecifico</div>
+    <p>Este contenido solo es visible para los administradores.</p>
+}
+else if (User.IsInRole("User"))
+{
+    <p>Este contenido solo es visible para los usuarios.</p>
 }
 else
 {
-    <div>Menú para otros usuarios</div>
+    <p>Este contenido es visible para todos los demás.</p>
 }
-
 
 
 

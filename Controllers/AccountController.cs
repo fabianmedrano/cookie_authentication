@@ -39,15 +39,20 @@ namespace cookie_authentication.Controllers
         {
 
             var userDb = await _context.Users.FirstOrDefaultAsync(u => u.Username == user.Username && u.Password == u.Password);
-
+            var userRoles = userDb?.UserRoles.Select(ur => ur.Role.Name).ToList();
             if (userDb != null) {
 
                 var claims = new List<Claim> {
-                new Claim (ClaimTypes.Email, user.Username),
-                new Claim (ClaimTypes.Name, "maria"),
+                 
+                    new Claim (ClaimTypes.Email, userDb.Email),
+                    new Claim (ClaimTypes.Name, userDb.Name),
                 //  new Claim("LastChanged", { /*Database Value*/} ),
-              
                 };
+
+                foreach (var role in userRoles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
 
 
                 var claimsIdentity = new ClaimsIdentity(

@@ -10,7 +10,7 @@ namespace cookie_authentication.Middleware
         private readonly Dictionary<string, List<string>> _routeRoles = new Dictionary<string, List<string>>
         {
             { "/", new List<string> { "admin", "client" } },
-            { "/ruta2", new List<string> { "rol2", "rol3" } },
+            { "/Home/Privacy", new List<string> { "admin", "client" } },
             // otras rutas y roles...
         };
 

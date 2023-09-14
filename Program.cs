@@ -59,7 +59,6 @@ app.UseCookiePolicy(cookiePolicyOptions);
 app.UseRouting();
 
 app.UseAuthentication();
-app.UseMiddleware<AuthorizationMiddleware>();
 app.UseAuthorization();
 
 app.MapControllerRoute(
