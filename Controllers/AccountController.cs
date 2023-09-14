@@ -16,8 +16,7 @@ namespace cookie_authentication.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+      
         private readonly ApplicationDbContext _context;
         private readonly AuthService _authenticationService;
         public AccountController(ApplicationDbContext context, AuthService authenticationService) {
@@ -30,7 +29,7 @@ namespace cookie_authentication.Controllers
 
         [HttpGet]
         public IActionResult Login() {
-            UserLoginViewMosdel userViewModels = new UserLoginViewMosdel();
+            UserLoginViewMosdel userViewModels = new ();
             return View(userViewModels);
         }
 
@@ -38,7 +37,11 @@ namespace cookie_authentication.Controllers
         public async Task<IActionResult> Login(UserLoginViewMosdel user)
         {
 
-            var userDb = await _context.Users.FirstOrDefaultAsync(u => u.Username == user.Username && u.Password == u.Password);
+            var userDb = await _context.Users
+                        .Include(u => u.UserRoles)
+                        .ThenInclude(ur => ur.Role)
+                        .FirstOrDefaultAsync(u => u.Username == user.Username && u.Password == u.Password);
+
             var userRoles = userDb?.UserRoles.Select(ur => ur.Role.Name).ToList();
             if (userDb != null) {
 
@@ -80,14 +83,14 @@ namespace cookie_authentication.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(UserRegisterViewModel user)
         {
-
-            var userDB = new User
+            var userDB = new User()
             {
                 Name = user.Name,
                 Email = user.Email,
                 Username = user.Username,
                 Password = user.Password
             };
+           
             // Asignar roles al usuario
             userDB.UserRoles = new List<UserRole>
             {

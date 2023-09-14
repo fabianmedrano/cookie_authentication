@@ -2,13 +2,7 @@
 @using cookie_authentication.Data;
 <!DOCTYPE html>
 
-@inject ApplicationDbContext _context
 
-@{
-    var username = User.Identity.Name;
-    var user = _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).FirstOrDefault(u => u.Username == username);
-    var userRoles = user?.UserRoles.Select(ur => ur.Role.Name).ToList();
-}
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -37,20 +31,21 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
 
-@if (User.IsInRole("Admin"))
-{
-    <p>Este contenido solo es visible para los administradores.</p>
-}
-else if (User.IsInRole("User"))
-{
-    <p>Este contenido solo es visible para los usuarios.</p>
-}
-else
-{
-    <p>Este contenido es visible para todos los demás.</p>
-}
-
-
+                        <li class="nav-item">
+                            
+                            @if (User.IsInRole("admin"))
+                            {
+                                <p>Este contenido solo es visible para los administradores.</p>
+                            }
+                            else if (User.IsInRole("User"))
+                            {
+                                <p>Este contenido solo es visible para los usuarios.</p>
+                            }
+                            else
+                            {
+                                <p>Este contenido es visible para todos los demás.</p>
+                            }
+                         </li>
 
                     </ul>
                 </div>

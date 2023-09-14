@@ -10,19 +10,19 @@ namespace cookie_authentication.Models
         public int Id { get; set; }
 
         [Required, Column(TypeName = "varchar(200)")]
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
         [Required,Column(TypeName = "varchar(200)")]
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
 
         [Required,Column(TypeName = "varchar(200)")]
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
 
         [Required,Column(TypeName = "varchar(200)")]
-        public string Username { get; set; }
+        public string Username { get; set; } = "";
 
 
 
-        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; } =default!;
     }
 }
